@@ -15,8 +15,8 @@ app.use(cors());
 app.use(express.json());
 const userController = new UserController(app, new UserDao());
 const tuitController = new TuitController(app, new TuitDao());
-// app.get('/', (req: Request, res: Response) =>
-//     res.send('Welcome to Foundation of Software Engineering!!!!'));
+app.get('/', (req: Request, res: Response) =>
+    res.send('Welcome to Foundation of Software Engineering!!!!'));
 
 // app.get('/hello', (req: Request, res: Response) =>
 //     res.send('Welcome to Foundation of Software Engineering!'));
