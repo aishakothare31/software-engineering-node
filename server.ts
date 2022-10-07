@@ -13,7 +13,7 @@ import TuitDao from "./daos/TuitDao";
 // mongoose.connect('mongodb://localhost:27017/Tuiter');
 const userName = process.env.USERNAME;
 const password = process.env.PASSWORD;
-const url = `mongodb+srv://aishak31:fa22fse!@cluster0.f6urgn7.mongodb.net/Tuiter?retryWrites=true&w=majority`;
+const url = `mongodb+srv://${userName}:${password}@cluster0.f6urgn7.mongodb.net/Tuiter?retryWrites=true&w=majority`;
 mongoose.connect(url)
 const cors = require('cors')
 const app = express();
