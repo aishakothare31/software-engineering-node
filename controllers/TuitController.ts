@@ -10,7 +10,7 @@ export default class TuitController implements TuitControllerI{
         this.app = app;
         this.tuitDao = tuitDao;
         app.get("/tuits", this.findAllTuits);
-        app.get("/tuits/:userid/tuits", this.findTuitsByUser);
+        app.get("/users/:userid/tuits", this.findTuitsByUser);
         app.get("/tuits/:tid", this.findTuitById);
         app.post("/tuits", this.createTuit);
         app.put("/tuits/:tid", this.updateTuit);
