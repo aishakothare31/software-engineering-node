@@ -1,6 +1,6 @@
 import User from "./User";
 
-export default interface Follows {
-    followedBy:User
-    following: User
+export default class Follows {
+    private followedBy:User | null = null
+    private following: User | null = null
 };
