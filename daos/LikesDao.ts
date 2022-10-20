@@ -28,13 +28,12 @@ export default class LikesDao implements LikesDaoI {
    * @returns Promise To be notified when the likes are retrieved from
    * database
    */
-    async findTuitsUserLiked(uid: string): Promise<any>{
+    findTuitsUserLiked = async (uid: string): Promise<Likes[]> =>
         // return await LikesModel.findById(uid);
         LikesModel
             .find({user: uid})
             .populate("likedTuit")
-            .exec();
-    } 
+            .exec(); 
 
     /**
    * Uses LikeModel to retrieve all likes from likes collection
