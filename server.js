@@ -1,3 +1,6 @@
+/**
+ * @file Implements the main server file that runs the app
+ */
 const express = require('express');
 const app = express();
 

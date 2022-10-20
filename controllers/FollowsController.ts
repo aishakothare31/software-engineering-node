@@ -15,7 +15,7 @@ import FollowsControllerI from "../interfaces/FollowsController";
  *     </li>
  *     <li>POST /users/:uid_cur/follows/:uid :record a user following another user
  *     </li>
- *     <li>DELETE /users/:uid/unlikes/:tid :record a user unfollowing another user
+ *     <li>DELETE /users/:uid/unfollows/:tid :record a user unfollowing another user
  *     /li>
  * </ul>
  * @property {FollowsDao} followsDao Singleton DAO implementing likes CRUD operations
