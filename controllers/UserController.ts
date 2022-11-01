@@ -13,6 +13,7 @@ import UserControllerI from "../interfaces/UserController";
  *     <li>GET /users/:userid :retrieve individual user instance </li>
  *     <li>PUT /users/:userid :modify individual user instance </li>
  *     <li>DELETE /users/:userid :remove specified user instance</li>
+ *     <li>DELETE /users/username/:username :remove specified user instance</li>
  * </ul>
  * @property {UserDao} userDao Singleton DAO implementing user CRUD operations
  * @property {UserController} userController Singleton controller implementing
@@ -29,6 +30,7 @@ export default class UserController implements UserControllerI {
        this.app.post('/users', this.createUser);
        this.app.delete('/users/:userid', this.deleteUser);
        this.app.put('/users/:userid', this.updateUser);
+       this.app.delete('/users/username/:username', this.deleteUsersByUsername);
    }
 
     /**
@@ -85,5 +87,16 @@ export default class UserController implements UserControllerI {
    updateUser = (req: Request, res: Response) =>
        this.userDao.updateUser(req.params.userid, req.body)
            .then(status => res.json(status));
+
+    /**
+     * Removes a user instance from the database
+     * @param {Request} req Represents client request: includes path
+     * parameter uid - the primary key of the user to be removed.
+     * @param {Response} res Represents response to client: includes status
+     * on whether deletion successful or not.
+     */
+    deleteUsersByUsername = (req: Request, res:Response) =>
+        this.userDao.deleteUsersByUsername(req.params.username)
+            .then(status => res.json(status));
 }
 
