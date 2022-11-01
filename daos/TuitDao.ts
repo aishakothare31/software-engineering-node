@@ -11,7 +11,7 @@ import User from "../models/User";
  * @class TuitDao Implements Data Access Object managing data storage
  * of tuits
  */
-export default class UserDao implements TuitDaoI {
+export default class TuitDao implements TuitDaoI {
     /**
    * Uses TuitModel to retrieve all tuits from tuits collection
    * @returns Promise To be notified when the tuits are retrieved from
@@ -66,5 +66,9 @@ export default class UserDao implements TuitDaoI {
    */
    async updateTuit(tid: string, tuit: Tuit): Promise<any> {
        return await TuitModel.updateOne({_id: tid}, {$set: tuit});
+   }
+
+   async createTuitByUser(uid: string, tuit: Tuit): Promise<Tuit> {
+       return await TuitModel.create(tuit)
    }
 }

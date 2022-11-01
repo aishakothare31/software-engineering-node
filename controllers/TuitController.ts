@@ -2,6 +2,8 @@
  * @file Tuti Controller RESTful Web service API for tuits resource
  */
 import {Request, Response, Express} from "express";
+import { ParamsDictionary } from "express-serve-static-core";
+import { ParsedQs } from "qs";
 import TuitDao from "../daos/TuitDao";
 import TuitControllerI from "../interfaces/TuitController";
 import Tuit from "../models/Tuit";
@@ -34,7 +36,9 @@ export default class TuitController implements TuitControllerI{
         app.post("/tuits", this.createTuit);
         app.put("/tuits/:tid", this.updateTuit);
         app.delete("/tuits/:tid", this.deleteTuit);
+        app.post("/users/:uid/tuits",this.createTuitByUser);
     }
+
      /**
    * Retrieves all tuits from the database and returns an array of tuits.
    * @param {Request} req Represents request from client
@@ -101,4 +105,8 @@ export default class TuitController implements TuitControllerI{
     updateTuit = (req: Request, res: Response) =>
       this.tuitDao.updateTuit(req.params.tid, req.body)
       .then(status => res.json(status));
+
+    createTuitByUser = (req: Request, res: Response) =>
+      this.tuitDao.createTuitByUser(req.params.uid,req.body)
+      .then((tuit: Tuit) => res.json(tuit));
 }

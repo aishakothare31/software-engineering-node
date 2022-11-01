@@ -62,5 +62,7 @@ export default interface TuitController {
     * on whether deleting a user was successful or not
     */
     deleteTuit(req: Request, res: Response): void;
+
+    createTuitByUser(req: Request, res: Response): void;
  }
  
