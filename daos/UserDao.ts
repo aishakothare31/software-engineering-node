@@ -11,6 +11,18 @@ import UserDaoI from "../interfaces/UserDao";
  * for Users
  */
 export default class UserDao implements UserDaoI {
+    private static dao: UserDao | null = null;  
+    /**
+     * Returns the instance of UseerDao. 
+     * If instance absent then instance created and returned
+     * @returns {UserDao} singleton of User DAO
+     */
+    public static getInstance = (): UserDao => {
+      if (UserDao.dao === null) {
+        UserDao.dao = new UserDao();
+      }
+      return UserDao.dao;
+    }
     /**
    * Uses UserModel to retrieve all user docs from users collection
    * @returns Promise To be notified when the users are retrieved from
@@ -65,5 +77,14 @@ export default class UserDao implements UserDaoI {
    async deleteUsersByUsername(username: string): Promise<any> {
        return await UserModel.deleteOne({username:username});
    }
+
+   /**
+   * Find user instance from the database
+   * @param {string} username User's name on tuiter to be found
+   * @returns Promise To be notified when user is found
+   */
+    async findUsersByUsername(username: string): Promise<any> {
+        return await UserModel.findOne({username:username});
+    }
 }
 

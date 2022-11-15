@@ -49,5 +49,14 @@ export default interface UserDao {
    * @returns Promise To be notified when user is removed from database.
    */
    deleteUsersByUsername(username: string): Promise<any>;
+
+   /**
+   * Finds user instance from database.
+   * @param {string} username User with this username on tuiter to be found.
+   * @returns Promise To be notified with User.
+   */
+    findUsersByUsername(username: string): Promise<any>;
+
+
 }
 

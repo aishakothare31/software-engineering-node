@@ -39,10 +39,11 @@ export default class UserController implements UserControllerI {
    * @param {Response} res Represents response to client - includes the
    * body formatted as JSON arrays containing the user objects.
    */
-   findAllUsers = (req: Request, res: Response) =>
-       this.userDao.findAllUsers()
+   findAllUsers = (req: Request, res: Response) => 
+        this.userDao.findAllUsers()
            .then(users => res.json(users));
 
+   
     /**
    * Fetches the user by their primary key.
    * @param {Request} req Represents client request: includes path.
@@ -98,5 +99,16 @@ export default class UserController implements UserControllerI {
     deleteUsersByUsername = (req: Request, res:Response) =>
         this.userDao.deleteUsersByUsername(req.params.username)
             .then(status => res.json(status));
+
+    /**
+     * Finds a user instance from the database
+     * @param {Request} req Represents client request: includes path
+     * parameter uid - the primary key of the user to be removed.
+     * @param {Response} res Represents response to client: includes status
+     * on whether deletion successful or not.
+     */
+     findUsersByUsername = (req: Request, res:Response) =>
+     this.userDao.findUsersByUsername(req.params.username)
+         .then(status => res.json(status));
 }
 
