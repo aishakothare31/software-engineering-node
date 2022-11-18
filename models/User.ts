@@ -22,7 +22,7 @@ import Location from "./Location";
  * @property {Location} location: Location of user
  */
 export default class User {
-   private username: string = '';
+   username: string = '';
    password: string = '';
    private firstName: string | null = null;
    private lastName: string | null = null;

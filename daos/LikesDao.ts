@@ -6,6 +6,8 @@ import Likes from "../models/Likes";
 import LikesModel from "../mongoose/LikesModel";
 import LikesDaoI from "../interfaces/LikesDao";
 import User from "../models/User";
+import TuitModel from "../mongoose/TuitModel";
+import  Stats  from "../models/Stats";
 
 /**
  * @class LikeDao Implements Data Access Object managing data storage
@@ -29,11 +31,19 @@ export default class LikesDao implements LikesDaoI {
    * database
    */
     findTuitsUserLiked = async (uid: string): Promise<Likes[]> =>
-        // return await LikesModel.findById(uid);
+        // LikesModel
+        //     .find({user: uid})
+        //     .populate("likedTuit")
+        //     .exec(); 
         LikesModel
-            .find({user: uid})
-            .populate("likedTuit")
-            .exec(); 
+            .find({likedBy: uid})
+            .populate({
+            path: "likedTuit",
+            populate: {
+                path: "postedBy"
+            }
+            })
+            .exec();
 
     /**
    * Uses LikeModel to retrieve all likes from likes collection
@@ -74,5 +84,23 @@ export default class LikesDao implements LikesDaoI {
    */
     findTuitLikesCount = async (tid: string): Promise<any> => 
     LikesModel.countDocuments({likedTuit: tid});
+
+    findUserLikesTuit = async (uid: string, tid:string) =>
+    LikesModel.findOne(
+      {tuit: tid, likedBy: uid});
+
+    
+    findAllTuitsLikedByUser = async (uid: string) =>
+        LikesModel
+            .find({likedBy: uid})
+            .populate({
+            path: "likedTuit",
+            populate: {
+                path: "postedBy"
+            }
+            })
+            .exec();
+
+
     
 }

@@ -6,12 +6,25 @@ import Tuit from "../models/Tuit";
 import TuitModel from "../mongoose/TuitModel";
 import TuitDaoI from "../interfaces/TuitDao";
 import User from "../models/User";
+import Stats from "../models/Stats";
 
 /**
  * @class TuitDao Implements Data Access Object managing data storage
  * of tuits
  */
 export default class TuitDao implements TuitDaoI {
+    private static dao: TuitDao | null = null;
+  /**
+   * Returns the instance of TuitDao. If instance is not present the
+   * first creates the instance and the returns the same instance.
+   * @returns {TuitDao} singleton of Likes DAO
+   */
+  public static getInstance = (): TuitDao => {
+    if (TuitDao.dao === null) {
+      TuitDao.dao = new TuitDao();
+    }
+    return TuitDao.dao;
+  }
     /**
    * Uses TuitModel to retrieve all tuits from tuits collection
    * @returns Promise To be notified when the tuits are retrieved from
@@ -36,9 +49,10 @@ export default class TuitDao implements TuitDaoI {
    * @param {string} userid User's primary key
    * @returns Promise To be notified when tuits are retrieved from the database
    */
-   async findTuitsByUser(userid: string): Promise<any> {
-    return await TuitModel.find({postedBy: userid});
-    }
+async findTuitsByUser(userid: string): Promise<Tuit[]> {
+    //return await TuitModel.find({postedBy: uid}).exec();
+    return await TuitModel.find({ postedBy: userid });
+}   
 
     /**
    * Inserts tuit instance into the database
@@ -71,4 +85,26 @@ export default class TuitDao implements TuitDaoI {
    async createTuitByUser(uid: string, tuit: Tuit): Promise<Tuit> {
        return await TuitModel.create(tuit)
    }
+
+    /**
+   * update a tuit's stats
+   * @param tid id ot the tuit
+   * @param newStats new stats of the tuit
+   * @returns
+   */
+     updateLikes = async (tid:string, newStats: Stats): Promise<any> =>
+     TuitModel.updateOne(
+         {_id: tid},
+         {$set: {stats: newStats}});
+    
+           /**
+   * update a tuit's stats
+   * @param tid id ot the tuit
+   * @param newStats new stats of the tuit
+   * @returns
+   */
+     updateDislikes = async (tid:string, newStats: Stats): Promise<any> =>
+     TuitModel.updateOne(
+         {_id: tid},
+         {$set: {stats: newStats}});
 }

@@ -133,7 +133,5 @@ export default class TuitController implements TuitControllerI{
 
       this.tuitDao.createTuitByUser(uid,req.body)
       .then((tuit: Tuit) => res.json(tuit));
-    }
-
-      
+    }    
 }

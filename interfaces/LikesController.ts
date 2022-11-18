@@ -55,4 +55,15 @@ export default interface LikesController {
      * database
      */
     userUnlikesTuit(req: Request, res: Response): void;
+   
+    /**
+     * Toggles the likes on a tuit
+     * @param {Request} req Represents client request: includes the
+     * path parameters uid and tid representing the user that is liking the tuit
+     * and the tuit being liked
+     * @param {Response} res Represents response to client, including the
+     * body formatted as JSON containing the new likes that was inserted in the
+     * database
+     */
+    userTogglesTuitLikes(req: Request, res: Response): void;
  }

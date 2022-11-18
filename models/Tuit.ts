@@ -1,7 +1,9 @@
 /**
  * @file Represents Tuit.
  */
+import { Stats } from "fs";
 import User from "./User";
+import stats from "./Stats"
 /**
  * @typedef Tuit represents the tuit message posted.
  * @typedef User: represented the user it was posted by.
@@ -12,4 +14,5 @@ export default class Tuit {
    private tuit: string = '';
    private postedOn: Date = new Date();
    private postedBy: User | null = null;
+   stats: Stats | null = null;
 }
