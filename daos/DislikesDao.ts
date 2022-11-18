@@ -54,7 +54,7 @@
     */
      findUsersThatDislikedTuit = async (tid: string): Promise<Dislikes[]> =>
          DislikesModel
-             .find({tuit: tid})
+             .find({dislikedTuit: tid})
              .populate("dislikedBy")
              .exec();
  

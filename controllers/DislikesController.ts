@@ -78,7 +78,7 @@
             const profile = req.session['profile'];
             const userId = uid === "me" && profile ?
                 profile._id : uid;
-            console.log("in findall tuits method", userId)
+            // console.log("in findall tuits method", userId)
             DislikesController.DislikesDao.findTuitsUserDisliked(userId)
                 .then(dislikes => {
                 const dislikesNonNullTuits =
@@ -100,8 +100,8 @@
       * database
       */
      userDislikesTuit = (req: Request, res: Response) => {
-         console.log(DislikesController.DislikesDao.userDislikesTuit(req.params.uid, req.params.tid)
-             .then(dislikes => res.json(dislikes)));
+        DislikesController.DislikesDao.userDislikesTuit(req.params.uid, req.params.tid)
+             .then(dislikes => res.json(dislikes));
         
      }
  
@@ -159,8 +159,9 @@
                 await DislikesController.likesDao.userUnlikesTuit(userId, tid);
                 tuit.stats.dislikes = howManyDislikedTuit + 1;
                 };
-                console.log(tuit.stats)
+                
                 await DislikesController.tuitDao.updateDislikes(tid, tuit.stats);
+                console.log("dislike toggle",tuit.stats)
                 res.sendStatus(200);
             } catch (e) {
                 res.sendStatus(404);
