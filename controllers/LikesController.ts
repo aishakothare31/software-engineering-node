@@ -158,6 +158,7 @@ export default class LikesController implements LikesControllerI {
             tuit.stats.likes = howManyLikedTuit + 1;
             };
             await LikesController.tuitDao.updateLikes(tid, tuit.stats);
+            console.log("like toggle",tuit.stats)
             res.sendStatus(200);
         } catch (e) {
             res.sendStatus(404);

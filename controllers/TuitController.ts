@@ -70,7 +70,7 @@ export default class TuitController implements TuitControllerI{
    */
     findTuitsByUser = (req: Request, res: Response) => {
 
-      console.log("in find user",req.params.userid)
+      // console.log("in find user",req.params.userid)
       let userId = req.params.userid === "me" && 
       // @ts-ignore
             req.session['profile'] ?
@@ -82,7 +82,7 @@ export default class TuitController implements TuitControllerI{
           }
         else {
       this.tuitDao.findTuitsByUser(userId)
-      .then((tuits: Tuit[]) => res.json(tuits)).then(tuit => res.json(tuit));
+      .then((tuits: Tuit[]) => res.json(tuits));
         }
     } 
     /**
