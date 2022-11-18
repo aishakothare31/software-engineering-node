@@ -1,6 +1,7 @@
 /**
  * @file Declares API for Tuits related data access object methods
  */
+import  Stats  from "../models/Stats";
 import Tuit from "../models/Tuit";
 /**
  * @interface TuitDao An interface for Tuits Data access objects - tuits of Tuiter.
@@ -19,7 +20,7 @@ export default interface TuitDao {
    * @param {string} uid User's primary key
    * @returns Promise To be notified when tuits are retrieved from the database
    */
-   findTuitsByUser(uid: string): Promise<Tuit[]>;
+   findTuitsByUser(userid: string): Promise<Tuit[]>;
 
    /**
    * Retrieves single tuit from users collection.
@@ -51,6 +52,13 @@ export default interface TuitDao {
    */
    deleteTuit(tid: string): Promise<any>;
 
+    /**
+   * Creates tuit based on userid.
+   * @param {string} uid Primary key of user to be added
+   * @returns Promise To be notified when tuit is added
+   */
    createTuitByUser(uid: string, tuit: Tuit): Promise<Tuit>;
+
+   updateLikes(tid: string, stats: Stats): Promise<any>;
 }
 

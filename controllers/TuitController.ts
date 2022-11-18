@@ -4,6 +4,7 @@
 import {Request, Response, Express} from "express";
 import { ParamsDictionary } from "express-serve-static-core";
 import { ParsedQs } from "qs";
+import { Session } from "inspector";
 import TuitDao from "../daos/TuitDao";
 import TuitControllerI from "../interfaces/TuitController";
 import Tuit from "../models/Tuit";
@@ -67,10 +68,23 @@ export default class TuitController implements TuitControllerI{
    * @param {Response} res Represents response to client: includes the
    * body formatted as JSON array containing tuit objects.
    */
-    findTuitsByUser = (req: Request, res: Response) =>
-      this.tuitDao.findTuitsByUser(req.params.userid)
+    findTuitsByUser = (req: Request, res: Response) => {
+
+      console.log("in find user",req.params.userid)
+      let userId = req.params.userid === "me" && 
+      // @ts-ignore
+            req.session['profile'] ?
+            // @ts-ignore
+            req.session['profile']._id : req.params.userid;
+            console.log(userId)
+        if (userId == "me") {
+            res.sendStatus(403);
+          }
+        else {
+      this.tuitDao.findTuitsByUser(userId)
       .then((tuits: Tuit[]) => res.json(tuits)).then(tuit => res.json(tuit));
-      
+        }
+    } 
     /**
      * Inserts a new tuit instance in the tuits collection.
    * @param {Request} req Represents request from client, including body
@@ -80,10 +94,12 @@ export default class TuitController implements TuitControllerI{
    * body formatted as JSON containing the new tuit that was inserted in the
    * database
    */
-    createTuit = (req: Request, res: Response) =>
-          this.tuitDao.createTuit(req.body)
-          .then((tuit: Tuit) => res.json(tuit));
-
+    createTuit = (req: Request, res: Response) => {
+  
+      this.tuitDao.createTuit(req.body)
+      .then((tuit: Tuit) => res.json(tuit));
+    }
+          
   /**
    * Removes tuit from the database.
    * @param {Request} req Represents request from client, including path
@@ -107,6 +123,17 @@ export default class TuitController implements TuitControllerI{
       .then(status => res.json(status));
 
     createTuitByUser = (req: Request, res: Response) =>
-      this.tuitDao.createTuitByUser(req.params.uid,req.body)
+    {
+      let uid = req.params.uid === "me"
+      //@ts-ignore
+            && req.session['profile'] ?
+      //@ts-ignore
+            req.session['profile']._id :
+            req.params.uid;
+
+      this.tuitDao.createTuitByUser(uid,req.body)
       .then((tuit: Tuit) => res.json(tuit));
+    }
+
+      
 }
