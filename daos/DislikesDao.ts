@@ -92,12 +92,22 @@
     */
      findTuitDislikesCount = async (tid: string): Promise<any> => 
      DislikesModel.countDocuments({dislikedTuit: tid});
- 
-     findUserDislikesTuit = async (uid: string, tid:string): Promise<any> =>
-     DislikesModel.findOne(
-       {dislikedTuit: tid, dislikedBy: uid});
+    
+    /**
+    * Uses DislikeModel to get if a user has disliked particular tuit.
+    * @param {string} tid Tuit id of tuit to be unDisliked
+    * * @param {string} uid user id of user.
+    * @returns Promise To be notified with the total Dislikes on specific tuit.
+    */ 
+    findUserDislikesTuit = async (uid: string, tid:string) =>
+    DislikesModel.findOne(
+        {dislikedTuit: tid, dislikedBy: uid});
 
-
+    /**
+    * Uses DislikeModel to get users all  disliked  tuits.
+    * * @param {string} uid user id of user.
+    * @returns Promise To be notified with the all disliked tuits.
+    */ 
     findAllTuitsDislikedByUser = async (uid: string) =>
     DislikesModel
         .find({dislikedBy: uid})

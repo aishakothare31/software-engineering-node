@@ -42,6 +42,7 @@ export default class LikesController implements LikesControllerI {
             app.delete("/users/:uid/unlikes/:tid", LikesController.likesController.userUnlikesTuit);
             app.get("/tuits/:tid/likes/count", LikesController.likesController.findTuitLikesCount);
             app.put("/users/:uid/likes/:tid", LikesController.likesController.userTogglesTuitLikes);
+            app.get("/users/:uid/likes/:tid",LikesController.likesController.findUserLikesTuit);
             // app.get("/user/:uid/likes", LikesController.likesController.findAllTuitsLikedByUser);
 
         }
@@ -130,6 +131,24 @@ export default class LikesController implements LikesControllerI {
             .then(likes => res.json(likes));
     
     
+    /**
+     * Get the tuit user liked.
+     * @param {Request} req Represents client request: includes the
+     * path parameters uid and tid representing the user that is liking the tuit
+     * and the tuit being liked
+     * @param {Response} res Represents response to client, includes the total count.
+     */
+    findUserLikesTuit = (req: Request, res: Response) =>
+        LikesController.likesDao.findUserLikesTuit(req.params.uid, req.params.tid)
+            .then(likes => res.json(likes))
+
+    /**
+     * Get the liking and unliking toggle for correct count of like and dislike.
+     * @param {Request} req Represents client request: includes the
+     * path parameters uid and tid representing the user that is liking the tuit
+     * and the tuit being liked
+     * @param {Response} res Represents response to client, includes the total count.
+     */       
     userTogglesTuitLikes = async (req: Request, res: Response) => {
         const uid = req.params.uid;
         const tid = req.params.tid;
@@ -165,22 +184,6 @@ export default class LikesController implements LikesControllerI {
         }
         }
     
-    // findAllTuitsLikedByUser = (req: Request, res:Response) => {
-    //     const uid = req.params.uid;
-    //     //@ts-ignore
-    //     const profile = req.session['profile'];
-    //     const userId = uid === "me" && profile ?
-    //         profile._id : uid;
-        
-    //     LikesController.likesDao.findAllTuitsLikedByUser(userId)
-    //         .then(likes => {
-    //         const likesNonNullTuits =
-    //             likes.filter(like => like.tuit);
-    //         const tuitsFromLikes =
-    //             likesNonNullTuits.map(like => like.tuit);
-    //         res.json(tuitsFromLikes);
-    //         });
-    //     }
         
         
           

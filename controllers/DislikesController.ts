@@ -130,7 +130,13 @@
          DislikesController.DislikesDao.findTuitDislikesCount(req.params.tid)
              .then(dislikes => res.json(dislikes));
      
-     
+    /**
+     * Get the liking and unliking toggle for correct count of like and dislike.
+     * @param {Request} req Represents client request: includes the
+     * path parameters uid and tid representing the user that is liking the tuit
+     * and the tuit being liked
+     * @param {Response} res Represents response to client, includes the total count.
+     */
      userTogglesTuitDislikes = async (req: Request, res: Response) => {
             const uid = req.params.uid;
             const tid = req.params.tid;
@@ -161,30 +167,11 @@
                 };
                 
                 await DislikesController.tuitDao.updateDislikes(tid, tuit.stats);
-                console.log("dislike toggle",tuit.stats)
                 res.sendStatus(200);
             } catch (e) {
                 res.sendStatus(404);
             }
         }
-
-        // findAllTuitsDislikedByUser = (req: Request, res:Response) => {
-        //     const uid = req.params.uid;
-        //     //@ts-ignore
-        //     const profile = req.session['profile'];
-        //     const userId = uid === "me" && profile ?
-        //         profile._id : uid;
-        //     console.log("in findall tuits method", userId)
-        //     DislikesController.DislikesDao.findAllTuitsDislikedByUser(userId)
-        //         .then(dislikes => {
-        //         const dislikesNonNullTuits =
-        //             dislikes.filter(dislike => dislike.tuit);
-        //         const tuitsFromDislikes =
-        //             dislikesNonNullTuits.map(dislike => dislike.tuit);
-        //         res.json(tuitsFromDislikes);
-        //         });
-               
-        //     }
                
                
  };
