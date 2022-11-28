@@ -44,6 +44,7 @@
              app.delete("/users/:uid/undislikes/:tid", DislikesController.DislikesController.userUndislikesTuit);
              app.get("/tuits/:tid/dislikes/count", DislikesController.DislikesController.findTuitDislikesCount);
              app.put("/users/:uid/dislikes/:tid", DislikesController.DislikesController.userTogglesTuitDislikes);
+             app.get("/users/:uid/dislikes/:tid",DislikesController.DislikesController.findUserDislikesTuit);
             //  app.get("/user/:uid/dislikes", DislikesController.DislikesController.findAllTuitsDislikedByUser);
          }
          return DislikesController.DislikesController;
@@ -172,6 +173,18 @@
                 res.sendStatus(404);
             }
         }
+        
+        /**
+         * Get the tuit user disliked.
+         * @param {Request} req Represents client request: includes the
+         * path parameters uid and tid representing the user that is disliking the tuit
+         * and the tuit being disliked
+         * @param {Response} res Represents response to client thats the tuit disliked.
+         */
+        findUserDislikesTuit = async (req: Request, res: Response) => {
+            DislikesController.DislikesDao.findUserDislikesTuit(req.params.uid, req.params.tid)
+            .then(dislikes => res.json(dislikes))
+          };
                
                
  };
